@@ -1,0 +1,30 @@
+Hello! Welcome to Pincho!
+#########################
+
+#INSTALLATION: Latest Ubuntu LTS 20.04 Focal Fossa
+##################################################
+
+Open terminal in Pincho_Vxx_Master folder and run:
+$P_installer.py
+
+The terminal will prompt 'y' or 'n' responses, so stay nearby and answer with 'y'.
+
+At the end the terminal will bring up vdb-config UI, 'enable' and 'exit'. Then you are done with installation! Congrats!
+
+#RUNNING PINCHO:
+###################################################
+
+***GOOD HOUSEKEEPING***
+Create a new folder (i.e. Files_to_be_processed).
+
+Enter that folder.
+
+Create subfolder(s) with the Species Name and Info as the Folder Name. (i.e. Files_to_be_processed/Pristimantis_toftae_skin_dorsal)
+
+Place respective information to process in those files (i.e. NGS reads F and/or R).
+
+Launch Pincho in parent folder (i.e. Files_to_be_processed)
+
+Reset page.
+
+Select the desired settings.
