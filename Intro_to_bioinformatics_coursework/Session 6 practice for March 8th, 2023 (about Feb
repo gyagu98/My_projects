@@ -1,0 +1,42 @@
+##Session 6 practice for March 8th, 2023 (about Feb 22, 2023)
+
+###practice1: how to subset data (6.2 in gitbook)
+
+test_Mar8 <- read.xlsx (xlsxFile="~/Desktop/Courses/Spring 2023/Bioinformatics/files to practice/MASS_crabs_dataset.xlsx", sheet = 1, startRow=1, colNames=TRUE)
+
+boxplot(index~FL, data=test_Mar8, col=(c("#DA291CFF", "#56A8CBFF", "#53A567FF")), main="MASS Crabs Boxplot", xlab="cylinders") 
+
+#then, after the boxplot was made, I will subset my data
+
+subset_my_test_Mar8 <- subset(test_Mar8, select = c(FL, RW))
+
+head(subset_my_test_Mar8)
+
+#subset another time
+only_small_CW_subset_my_test_Mar8 <- subset(test_Mar8, CW <=20)
+
+only_small_CW_subset_my_test_Mar8
+
+
+
+###practice2: stringr 4.4
+
+HB_path <- "~/Desktop/Courses/Spring 2023/Bioinformatics/HB_Project"
+
+HBA1_fasta_file <- read.table (file = "~/Desktop/Courses/Spring 2023/Bioinformatics/HB_Project/HBA_1_COEVOL_simple_PRUNED_LHT_NO_Croco.fasta_nucleotide.fasta", 
+                                    header = TRUE, 
+                                       sep = "\t",
+                          stringsAsFactors = FALSE)
+
+
+
+
+##MORE PRACTICE FROM MARCH 8,2023
+
+wilson_data <- read.xlsx (xlsxFile="~/Desktop/Courses/Spring 2023/Bioinformatics/files to practice/Mar8/wilson_data.xlsx", sheet = 2, startRow=1, colNames=TRUE)
+
+subset_altitude <- subset(altitude_data_xlsx, select = c(X5, X7))
+
+plot(x = subset_wilson$Weight, y = subset_wilson$Wing.chord) 
+mtext(side=3, line=0.5, adj=0, "Weight vs. Wing chord") 
+abline(lm(weight ~ wing chord, data = subset_wilson), col = "blue")

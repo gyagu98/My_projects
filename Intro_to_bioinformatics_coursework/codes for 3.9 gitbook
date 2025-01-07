@@ -1,0 +1,41 @@
+3.9 practice from gitbook, download NCBI sequences
+
+$$ load up packages
+library(rentrez)
+library(Biostrings)
+
+
+
+
+$$ load up nucleotide sequences from NCBI using R
+
+neanderthal_name <- "Homo neanderthalensis[Organism]"
+
+neanderthal_seq_IDs <- entrez_search(db="nuccore", term=neanderthal_name)
+
+neanderthaL_seqs_fasta <- entrez_fetch (db="nuccore", id=neanderthal_seq_IDs$ids, rettype="fasta")
+
+$$ save nuc sequence to computer
+
+write(neanderthaL_seqs_fasta, "neanderthal_seqs_file.txt")
+
+$$ save as a Biostring set into R
+
+my_Biostrings_set_neanderthal <- readDNAStringSet(filepath="~/Desktop/Courses/Spring 2023/Bioinformatics/files to practice/test_Feb22/neanderthal_seqs_file.txt", format="fasta")
+
+
+
+
+$$ download amino acid sequences from NCBI from the same species: 
+
+neanderthal_name <- "Homo neanderthalensis[Organism]"
+
+neanderthal_AA_IDs <- entrez_search(db="protein", term=neanderthal_name)
+
+neanderthal_AA_fasta <- entrez_fetch(db="protein", id=neanderthal_AA_IDs$ids, rettype="fasta")
+
+$$ save AA sequence to computer
+write(neanderthal_AA_fasta, "neanderthal_AA_file.txt")
+
+$$ Save as AA biostring set
+my_AA_Biostrings_set_Neanderthal <- readAAStringSet(filepath="~/Desktop/Courses/Spring 2023/Bioinformatics/files to practice/test_Feb22/neanderthal_AA_file.txt", format="fasta")
