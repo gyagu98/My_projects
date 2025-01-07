@@ -1,4 +1,4 @@
-##TO RUN AND VISUALIZE THE MT GENOME RECONSTRUCTION: 
+##TO RUN AND VISUALIZE THE MT GENOME RECONSTRUCTION:: 
 
 #We will be doing mitoz. In the folder, we need 3 files: R1 and R2 raw reads, and the fasta file of the reconstruction mtDNA
 #but, before we run we have to make sure the fasta file has to:
