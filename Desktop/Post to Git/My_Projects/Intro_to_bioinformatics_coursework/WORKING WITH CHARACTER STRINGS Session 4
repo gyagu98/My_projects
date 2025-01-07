@@ -1,0 +1,27 @@
+WORKING WITH CHARACTER STRINGS Session 4
+
+neanderthal_name_COX2 <- "Homo neanderthalensis[Organism] AND COX2[Gene]"
+
+neanderthal_seq_IDs <- entrez_search(db="nuccore", term=neanderthal_name_COX2)
+
+str(neanderthal_seq_IDs)
+
+neanderthal_seqs_fasta <- entrez_fetch(db="nuccore", id=neanderthal_seq_IDs$ids, rettype="fasta")
+
+neanderthal_seqs_fasta
+
+$$ now that we have neanderthal_seqs_fasta as a file, we can do some functions on it
+
+neanderthal_seq_split <- strsplit(neanderthal_seqs_fasta, split= '\n') 
+$$ this function above will split the vector into a new line
+
+$$multiple species 1 gene
+
+several_species_COX2 <- c("Homo neanderthalensis[Organism] AND COX2[Gene]", "Homo sapiens[Organism] AND COX2[Gene]", "Oophaga sylvatica[Organism] AND COX2[Gene]")
+
+my_collected_sequences <- list()
+
+for(i in 1:length(several_species_COX2)) {
+                             one_seq_IDs <- entrez_search(db="nuccore", term= several_species_COX2[i])
+                          one_seqs_fasta <- entrez_fetch(db="nuccore", id=one_seq_IDs$ids, rettype="fasta")
+             my_collected_sequences[[i]] <- one_seqs_fasta
