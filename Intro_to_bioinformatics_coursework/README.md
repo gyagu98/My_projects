@@ -1,0 +1,1 @@
+This is some coursework is from when I was a student taking Intro to Bioinformatics (Spring 2023). This Spring 2025, I will co-lecture Bioinformatics with my own designed lessons, stay tuned for that!
