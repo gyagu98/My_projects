@@ -1,0 +1,18 @@
+setwd("~/Desktop/Courses/Spring 2023/Bioinformatics/HB_Project")
+
+HB_path <- "~/Desktop/Courses/Spring 2023/Bioinformatics/HB_Project"
+
+#see files in HB_path:
+list.files(path = HB_path, 
+        pattern = NULL,
+     full.names = TRUE)
+
+
+# do HBA1 first
+HBA1_file <- read.table (file = "~/Desktop/Courses/Spring 2023/Bioinformatics/HB_Project/HBA_1_COEVOL_simple_PRUNED_LHT_NO_Croco.fasta_nucleotide.fasta", 
+                                    header = TRUE, 
+                                       sep = "\t",
+                          stringsAsFactors = FALSE)
+
+
+

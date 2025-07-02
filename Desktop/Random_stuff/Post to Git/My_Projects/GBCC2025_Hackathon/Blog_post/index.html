@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-06-28">
+<meta name="description" content="This is a follow on for the conference, link to training materials from GBCC (see slide)">
+
+<title>Adding Bioconductor Tools in Galaxy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="index_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="index_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#choosing-galaxy" id="toc-choosing-galaxy" class="nav-link" data-scroll-target="#choosing-galaxy">Choosing Galaxy</a></li>
+  <li><a href="#using-bioconductor-tools-in-galaxy" id="toc-using-bioconductor-tools-in-galaxy" class="nav-link" data-scroll-target="#using-bioconductor-tools-in-galaxy">Using Bioconductor tools in Galaxy</a></li>
+  <li><a href="#wrapping-and-integrating-tools-into-galaxy" id="toc-wrapping-and-integrating-tools-into-galaxy" class="nav-link" data-scroll-target="#wrapping-and-integrating-tools-into-galaxy">Wrapping and Integrating Tools into Galaxy</a></li>
+  <li><a href="#hands-on-example" id="toc-hands-on-example" class="nav-link" data-scroll-target="#hands-on-example">Hands-on Example</a></li>
+  <li><a href="#wrapping-gsva-in-galaxy-as-an-example-coming-soon" id="toc-wrapping-gsva-in-galaxy-as-an-example-coming-soon" class="nav-link" data-scroll-target="#wrapping-gsva-in-galaxy-as-an-example-coming-soon">Wrapping GSVA in Galaxy as an example (Coming Soon)</a></li>
+  <li><a href="#part-of-cofest-2025" id="toc-part-of-cofest-2025" class="nav-link" data-scroll-target="#part-of-cofest-2025">Part of CoFest 2025</a></li>
+  <li><a href="#current-progress-our-next-steps" id="toc-current-progress-our-next-steps" class="nav-link" data-scroll-target="#current-progress-our-next-steps">Current Progress &amp; Our Next Steps</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Adding Bioconductor Tools in Galaxy</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">education</div>
+    <div class="quarto-category">collaborations</div>
+    <div class="quarto-category">galaxy</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    This is a follow on for the conference, link to training materials from GBCC (see slide)
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://github.com/gyagu98">Gretta Yagudayeva</a> </p>
+             <p><a href="https://github.com/mblue9">Maria Doyle</a> </p>
+             <p><a href="https://github.com/csoneson">Charlotte Soneson</a> </p>
+             <p><a href="https://github.com/LiNk-NY">Marcel Ramos Pérez</a> </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 28, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="bioc-galaxy-image.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="bioc-galaxy-image.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" alt="Bioconductor and Galaxy logos"></a></p>
+</figure>
+</div>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This blog post is a follow-up to the <a href="https://gbcc2025.bioconductor.org/about/overview/">2025 Galaxy Bioconductor Community Conference</a>, held this year at Cold Spring Harbor Laboratory in New York. For the first time, this joint meeting brought together two leading open-source platforms in bioinformatics, Galaxy and Bioconductor, to highlight their powerful synergy and collaborative potential.</p>
+<p>In this post, we spotlight one of the most exciting sessions from the event: <strong>“Streamlining Bioinformatics: Adding Bioconductor Tools in Galaxy”</strong>, presented by <a href="https://github.com/cumbof">Fabio Cumbo</a>, <a href="https://github.com/jaidevjoshi83">Jayadev Joshi</a>, <a href="https://github.com/thepineapplepirate">Bryan Raubenolt</a>, and <a href="https://github.com/blankenberg">Daniel Blankenberg</a>. The session explored how developers can integrate Bioconductor tools into Galaxy by wrapping them within the web-based platform to expand accessibility and usability for researchers.</p>
+<p>In case you missed the live session, don’t worry– you can access the full set of training materials, including slides and examples on their <a href="https://github.com/cumbof/gbcc25_training_session">GitHub repository</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="bioc-galaxy-image3.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="bioc-galaxy-image3.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" alt="Github linked here"></a></p>
+</figure>
+</div>
+</section>
+<section id="choosing-galaxy" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-galaxy">Choosing Galaxy</h2>
+<p><a href="https://usegalaxy.org/">Galaxy</a> is an open source, web-based platform with a graphical user interface (GUI) designed to make complex scientific computational analysis more accessible, reproducible, and transparent.</p>
+<p>At its core, Galaxy is a powerful workflow system that empowers users to run bioinformatics tools and pipelines without needing advanced programming or computational training nor high-powered computing clusters.</p>
+<p>This becomes particularly valuable for users who lack computing power or coding experience as Galaxy will help you develop reproducible workflows that will answer your most complex scientific inquiry.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="bioc-galaxy-image2.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="bioc-galaxy-image2.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" alt="Galaxy Home Page"></a></p>
+</figure>
+</div>
+</section>
+<section id="using-bioconductor-tools-in-galaxy" class="level2">
+<h2 class="anchored" data-anchor-id="using-bioconductor-tools-in-galaxy">Using Bioconductor tools in Galaxy</h2>
+<p>While the conference highlighted the exciting potential of bridging together Bioconductor and Galaxy, there are other compelling reasons why this integration goes beyond a technical collaboration.</p>
+<p>Bioconductor is a powerful ecosystem of R-based tools that allow for a wide range of analyses, from differential gene expression to advanced pathway enrichment. However, many of these tools remain underutilized, especially outside computational biology, simply because not all researchers have sufficient training or computing access.</p>
+<p><strong>Three key benefits for using Bioconductor tools in Galaxy are:</strong></p>
+<ol type="1">
+<li><p><u><strong>Benefiting researchers</strong></u> with increased accessibility for researchers seeking more complex analyses without coding knowledge</p></li>
+<li><p><u><strong>Benefiting developers</strong></u> with increased visibility, recognition, and usage for developers as they expand the reach of their work</p></li>
+<li><p><u><strong>Benefiting Galaxy and Bioconductor</strong></u> by enabling Galaxy’s core values (i.e., accessibility, reproducibility, &amp; transparency) to reach the analysis complexity of Bioconductor</p></li>
+</ol>
+<p>It’s not just about ease, it becomes about <strong>equity</strong>, tools like Gene Set Variation Analysis (GSVA), which is essential for functional genomics, should not be limited to researchers with coding skills or powerful computer clusters.</p>
+</section>
+<section id="wrapping-and-integrating-tools-into-galaxy" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-and-integrating-tools-into-galaxy">Wrapping and Integrating Tools into Galaxy</h2>
+<p>There are several ways to wrap and integrate tools into Galaxy, depending on the tool’s language, dependencies, and how you want users to interact with it. Wrapping a tool means to make it available through Galaxy’s GUI for users to run your specific tool without touching the command line. Depending on their <em>recipe</em>, see below for a clickable gallery of a portion of the slideshow showcasing the different methods of tool wrapping:</p>
+<div id="awards-gallery" class="columns">
+<div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-4.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-4.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slides"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-5.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-5.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 2"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-6.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-6.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 3"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-7.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-7.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 4"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-8.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-8.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 5"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-9.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-9.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 6"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-10.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-10.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 7"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-11.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-11.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 8"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-12.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-12.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 9"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-13.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-13.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 10"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-14.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-14.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 11"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-15.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-15.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 12"></a></p>
+</div><div class="column" style="width:18.5%;">
+<p><a href="bioc-galaxy-16.png" class="lightbox" data-gallery="slides-gallery"><img src="bioc-galaxy-16.png" class="img-fluid" style="border: 1px solid #ccc; padding: 5px;" alt="Slide deck 13"></a></p>
+</div>
+</div>
+<div style="text-align: center;">
+<p><em>Slide Deck of all the methods to wrap and integrate Bioconductor tools into Galaxy</em></p>
+</div>
+<p>Wrapping and integrating tools into Galaxy can follow multiple paths, from manual configuration to automated wrapper tools.</p>
+</section>
+<section id="hands-on-example" class="level2">
+<h2 class="anchored" data-anchor-id="hands-on-example">Hands-on Example</h2>
+<p>The presenters walked us through a foundational “Hello World” example to demonstrate how tool wrapping works in Galaxy. This simple yet powerful exercise allowed participants to input a message via the Galaxy web interface and view a printed output—an approachable way to understand how Galaxy manages tools under the hood.</p>
+<p>Go ahead and try it out yourself by following this step by step guide:</p>
+<p>1) Clone Galaxy repo and enter it</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/galaxyproject/galaxy.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> galaxy/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>2) Ensure your Python Version is up to date (3.9 or higher)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>3) Make (or log into) a Galaxy account following this <a href="https://usegalaxy.org/login/start">Login/Register link</a></p>
+<p>4) <a href="https://github.com/cumbof/gbcc25_training_session/blob/main/example_tool_xml_files/hello_world/hello_world.xml">Download hello_world.xml file from Github Repo training session here</a></p>
+<p>5) Configure Galaxy and edit the following files:</p>
+<p>Within the galaxy directory, enter the config directory, and rename tool_conf.xml.sample to tool_conf.xml</p>
+<p>Within the new tool_conf.xml file, add this line of code (adjusting the path to where your hello_world.xml file is):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>section <span class="va">id</span><span class="op">=</span><span class="st">"DevTools"</span> <span class="va">name</span><span class="op">=</span><span class="st">"Tools Under Development"</span><span class="op">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>tool <span class="va">file</span><span class="op">=</span><span class="st">"path/to/hello_world.xml"</span> <span class="ex">/</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>6) Configure Galaxy via galaxy_conf_sample.yml file (within the same directory)</p>
+<p>Rename galaxy_conf_sample.yml to galaxy_conf.xml</p>
+<p>Within the new galaxy_conf.xml file, uncomment this line</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tool_config_file:</span> tool_conf.xml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In addition, add an email address you will use to register an admin account in a local Galaxy browser in this line:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">admin_users:</span> <span class="op">&lt;</span>insert email-address<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>7) Go ahead and run the code! (You may need to adjust for space in your machine)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NODE_OPTIONS</span><span class="op">=</span><span class="st">"--max-old-space-size=4096"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sh</span> run.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>8) You will know your run is successful if you see a line that says:</p>
+<p><strong><em>Serving on http://your-IP-Address</em></strong></p>
+<p>9) Concurrently, you can run planemo on the side and test your .xml file</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> hello_world_test</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">planemo</span> test hello_world.xml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>10) Your planemo results should show success in this format:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">All</span> 1 test<span class="er">(</span><span class="ex">s</span><span class="kw">)</span> <span class="ex">executed</span> passed.</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hello_world</span> <span class="er">(</span><span class="ex">Test</span> <span class="co">#1): passed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>10) To view your run.sh results, enter into a browser</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">http://localhost:</span><span class="op">&lt;</span>last four numbers of your IP Address<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>11) You should a Galaxy window, within which you can test your new <strong>Hello World</strong> tool, as seen below!</p>
+<p>Once Galaxy is running, locate your “Hello World” tool under Tools Under Development, and run it. You should see your message printed in the output—demonstrating a successful wrap!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="bioc-galaxy-17.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="bioc-galaxy-17.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" alt="Galaxy showing the new Hello World tool"></a></p>
+</figure>
+</div>
+</section>
+<section id="wrapping-gsva-in-galaxy-as-an-example-coming-soon" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-gsva-in-galaxy-as-an-example-coming-soon">Wrapping GSVA in Galaxy as an example (Coming Soon)</h2>
+<p><a href="https://www.bioconductor.org/packages/release/bioc/html/GSVA.html">GSVA</a>, a common Bioconductor tool used in functional genomics to assess gene sets rather than individual genes, is defined as <em>non-parametric, unsupervised method for estimating variation of gene set enrichment through the samples of a expression data set</em>. GSVA is ideal for identifying biological processes associated with different conditions or phenotypes, the type of analyses interesting for a broad audience!</p>
+<p>In effort to make advanced pathway enrichment analysis accessible to a broader audience without reliance on code or complex dependencies, our CoFest team set out to wrap the tool—eliminating the need for R coding or package installation.</p>
+<p><strong>Why wrap GSVA?</strong></p>
+<ul>
+<li><p>No R code required to run</p></li>
+<li><p>No complex dependencies</p></li>
+<li><p>Reproducible and GUI-based</p></li>
+<li><p>Ideal for a broad research groups while friendly for interdisciplinary approaches</p></li>
+</ul>
+<p>A sneak peek to preview our GSVA workflow is:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gsvapar <span class="ot">&lt;-</span> <span class="fu">gsvaParam</span>(<span class="fu">as.matrix</span>(expr), genesets)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>es <span class="ot">&lt;-</span> <span class="fu">gsva</span>(gsvapar)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>... </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Rscript gsva.r <span class="sc">-</span>e test<span class="sc">-</span>data<span class="sc">/</span>CostaEtAl2021_RNAseq_logCPM.csv <span class="sc">-</span>g test<span class="sc">-</span>data<span class="sc">/</span>c7.immunesigdb.v2024.<span class="fl">1.</span>Hs.symbols.innate.adaptive.gmt <span class="sc">-</span>o testout.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These lines of R code, once wrapped, will be automatically executed behind the scenes by Galaxy, using inputs provided through form fields and datasets uploaded by the user.</p>
+</section>
+<section id="part-of-cofest-2025" class="level2">
+<h2 class="anchored" data-anchor-id="part-of-cofest-2025">Part of CoFest 2025</h2>
+<p>Developing this blog post, the wrapping of tools, executing “Hello World” wrapping, and GSVA wrapping were all part of <a href="https://gbcc2025.bioconductor.org/cofest/overview/">CoFest 2025</a>.</p>
+<p>CoFest, was a dynamic and hands-on event that was held after the GBCC on June 27-28, 2025. <strong>CoFest is more than just a hackathon</strong>, it was a welcoming, community-driven collaboration and contribution in an attempt to fulfill the mission of GBCC and intermix Galaxy and Bioconductor.</p>
+<p>At CoFest, teams focused on various software development projects like workflow integration, parameter handling, app development, interface design, and more. You can explore this year’s CoFest projects on this <a href="https://docs.google.com/presentation/d/1zSIr1Z1eUzsCf0q5lah0mHziACqMLhb2F0HFkT0xoXs/edit?slide=id.g36b0fb0613a_2_6#slide=id.g36b0fb0613a_2_6">slide deck</a>!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="bioc-galaxy-18.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="GBCC Hackathon 2025 In Action!"><img src="bioc-galaxy-18.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" alt="The whole Hackathon team in action"></a></p>
+</figure>
+</div>
+<figcaption>GBCC Hackathon 2025 In Action!</figcaption>
+</figure>
+</div>
+<p>Our project was just one of the many other collaborations featured this year. Together as a team (we) Maria, Gretta, Charlotte, and Marcel worked together to figure out how to wrap Bioconductor tools into Galaxy.</p>
+</section>
+<section id="current-progress-our-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="current-progress-our-next-steps">Current Progress &amp; Our Next Steps</h2>
+<p><strong>During the CoFest, we:</strong></p>
+<ul>
+<li><p>Used <strong>hello_world.xml</strong> as a starting point to learn Galaxy tool wrapping</p></li>
+<li><p>Created a draft <strong>gsva.xml</strong> wrapper and corresponding <strong>gsva.R</strong> script</p></li>
+<li><p>Explored <strong>support tools for generating the wrapper</strong>, such as using <a href="https://github.com/jaidevjoshi83/r2g2">R2-G2</a> to generate Galaxy tool wrappers from R scripts (which currently needs updates for newer Macs and Python versions)</p></li>
+<li><p><a href="https://planemo.readthedocs.io/en/latest/">Planemo</a> was used to lint, test, and iterate on the XML wrapper</p></li>
+</ul>
+<p><strong>What we plan to do next:</strong></p>
+<ul>
+<li><p>Make additional support for GSVA and R2-G2 methods</p></li>
+<li><p>Ensure compatibility between newer computer architecture and software</p></li>
+</ul>
+<p>Stay tuned for a future blog post about wrapping a Bioconductor package!</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
