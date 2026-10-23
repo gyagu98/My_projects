@@ -1,0 +1,34 @@
+{
+  "source": "https://api.figshare.com/v2/file/download/34464122",
+  "sha256": "e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830",
+  "source_dimensions": [
+    24673,
+    15706
+  ],
+  "retained_cells": 24562,
+  "donors": [
+    "patient_101",
+    "patient_1015",
+    "patient_1016",
+    "patient_1039",
+    "patient_107",
+    "patient_1244",
+    "patient_1256",
+    "patient_1488"
+  ],
+  "count_matrix_matches_source_totals": true,
+  "detected_gene_minimum": 200,
+  "design": "~ donor + condition",
+  "contrast": [
+    "condition",
+    "stim",
+    "ctrl"
+  ],
+  "gene_filter": "count >=10 in at least 3 pseudobulk samples",
+  "mitochondrial_qc": "Unavailable: processed export has no MT- genes",
+  "annotations": "Inherited cell_type labels; not independently validated",
+  "multiplets": "Flags unavailable in this processed export; no new doublet calling",
+  "p_adjustment": "BH within cell type; independent filtering and Cooks filtering enabled",
+  "cross_cell_type_claims": "Descriptive; no treatment-by-cell-type interaction test",
+  "runtime_seconds": 28.68
+}

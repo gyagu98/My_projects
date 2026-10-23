@@ -1,4 +1,6 @@
 # My_projects
-These are all the projects I contribute to on a regular basis in terms of my dissertation and external projects of my own interest
+Research, dissertation, and independent projects. Each project folder has its own README with details.
 
-Go ahead and explore each folder that has a separate README file for more info
+## Featured study
+
+- [Donor-paired PBMC interferon-response reanalysis](single-cell-study/README.md): reproducible reanalysis of the Kang et al. processed single-cell dataset. The bundle includes the [HTML report](single-cell-study/REPORT.html), analysis code, tables, diagnostics, donor audits, and provenance. See the study README for methods, limitations, and reproduction instructions.

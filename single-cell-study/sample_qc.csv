@@ -1,0 +1,17 @@
+donor,condition,cells,retained,median_counts,median_genes
+patient_101,ctrl,858,858,1239.5,534.0
+patient_101,stim,1166,1166,1311.0,546.0
+patient_1015,ctrl,2738,2738,1244.0,528.0
+patient_1015,stim,2352,2352,1349.5,551.0
+patient_1016,ctrl,1723,1723,1015.0,469.0
+patient_1016,stim,1635,1635,1084.0,491.0
+patient_1039,ctrl,461,408,1419.0,543.0
+patient_1039,stim,641,584,1483.0,551.0
+patient_107,ctrl,517,517,1465.0,542.0
+patient_107,stim,525,525,1390.0,541.0
+patient_1244,ctrl,1879,1879,1276.0,512.0
+patient_1244,stim,1464,1464,1369.0,550.5
+patient_1256,ctrl,2108,2108,1189.0,517.0
+patient_1256,stim,2026,2026,1271.5,534.0
+patient_1488,ctrl,2031,2030,1162.0,478.0
+patient_1488,stim,2549,2549,1261.0,512.0

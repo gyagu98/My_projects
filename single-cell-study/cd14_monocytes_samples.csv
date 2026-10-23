@@ -1,0 +1,17 @@
+,donor,condition,n_cells
+pb0,patient_101,ctrl,207
+pb1,patient_101,stim,269
+pb2,patient_1015,ctrl,859
+pb3,patient_1015,stim,718
+pb4,patient_1016,ctrl,393
+pb5,patient_1016,stim,355
+pb6,patient_1039,ctrl,126
+pb7,patient_1039,stim,164
+pb8,patient_107,ctrl,210
+pb9,patient_107,stim,179
+pb10,patient_1244,ctrl,418
+pb11,patient_1244,stim,300
+pb12,patient_1256,ctrl,402
+pb13,patient_1256,stim,387
+pb14,patient_1488,ctrl,316
+pb15,patient_1488,stim,393

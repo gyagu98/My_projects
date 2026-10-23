@@ -1,0 +1,46 @@
+{
+  "B cells / primary": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "B cells / threshold 50": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "CD14+ Monocytes / primary": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "CD4 T cells / primary": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "CD8 T cells / primary": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "CD8 T cells / threshold 10": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "CD8 T cells / threshold 50": [
+    "As the residual degrees of freedom is less than 3, the distribution of log dispersions is especially asymmetric and likely to be poorly estimated by the MAD.",
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "Dendritic cells / primary": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "Dendritic cells / threshold 10": [
+    "The dispersion trend curve fitting did not converge. Switching to a mean-based dispersion trend."
+  ],
+  "FCGR3A+ Monocytes / primary": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "FCGR3A+ Monocytes / threshold 10": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "FCGR3A+ Monocytes / threshold 50": [
+    "As the residual degrees of freedom is less than 3, the distribution of log dispersions is especially asymmetric and likely to be poorly estimated by the MAD.",
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "NK cells / primary": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ],
+  "NK cells / threshold 50": [
+    "The inplace keyword in Series.drop is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details."
+  ]
+}

@@ -1,0 +1,22 @@
+cell_type,min_cells,pairs,same_samples_as_primary,log2fc_correlation
+B cells,10,8,True,
+B cells,20,8,True,
+B cells,50,6,False,0.9917593742569606
+CD14+ Monocytes,10,8,True,
+CD14+ Monocytes,20,8,True,
+CD14+ Monocytes,50,8,True,
+CD4 T cells,10,8,True,
+CD4 T cells,20,8,True,
+CD4 T cells,50,8,True,
+CD8 T cells,10,6,False,0.9928561042194944
+CD8 T cells,20,5,True,
+CD8 T cells,50,3,False,0.9693655682865596
+Dendritic cells,10,8,False,0.9941617393150838
+Dendritic cells,20,6,True,
+Dendritic cells,50,0,False,
+FCGR3A+ Monocytes,10,8,False,0.9943584067762741
+FCGR3A+ Monocytes,20,6,True,
+FCGR3A+ Monocytes,50,4,False,0.98854474842851
+NK cells,10,8,True,
+NK cells,20,8,True,
+NK cells,50,6,False,0.9911564602821236

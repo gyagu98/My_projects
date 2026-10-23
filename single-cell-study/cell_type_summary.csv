@@ -1,0 +1,9 @@
+cell_type,status,donor_pairs,cells,tested_genes,finite_padj,padj_below_005,up,down
+B cells,analyzed,8.0,2651.0,3804.0,3804.0,771.0,481.0,290.0
+CD14+ Monocytes,analyzed,8.0,5696.0,5364.0,5364.0,3040.0,1527.0,1513.0
+CD4 T cells,analyzed,8.0,11238.0,7048.0,7048.0,1316.0,753.0,563.0
+CD8 T cells,analyzed,5.0,1542.0,2081.0,2081.0,189.0,156.0,33.0
+Dendritic cells,analyzed,6.0,471.0,2089.0,2089.0,708.0,442.0,266.0
+FCGR3A+ Monocytes,analyzed,6.0,991.0,2674.0,2674.0,991.0,572.0,419.0
+Megakaryocytes,insufficient complete pairs,,,,,,,
+NK cells,analyzed,8.0,1716.0,2437.0,2437.0,500.0,300.0,200.0
